@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using TollStationSystem.Core.Locations.Model;
 
 namespace TollStationSystem.Core.Users.Model
 {

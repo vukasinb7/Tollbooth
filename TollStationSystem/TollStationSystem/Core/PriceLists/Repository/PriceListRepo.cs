@@ -6,7 +6,7 @@ using TollStationSystem.Core.PriceLists.Model;
 
 namespace TollStationSystem.Core.PriceLists.Repository
 {
-    class PriceListRepo : IPriceListRepo
+    public class PriceListRepo : IPriceListRepo
     {
         List<PriceList> priceLists;
         string path;

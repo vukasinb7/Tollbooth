@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace TollStationSystem.Core.Payments.Model
 {
-    class Payment
+    public class Payment
     {
         int id;
         DateTime entranceDate;

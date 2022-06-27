@@ -3,7 +3,7 @@ using TollStationSystem.Core.Sections.Model;
 
 namespace TollStationSystem.Core.Sections.Repository
 {
-    interface ISectionRepo
+    public interface ISectionRepo
     {
         List<Section> Sections { get; }
 

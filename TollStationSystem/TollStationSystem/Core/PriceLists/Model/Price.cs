@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace TollStationSystem.Core.PriceLists.Model
 {
-    class Price
+    public class Price
     {
         int sectionId;
         float priceDin;

@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace TollStationSystem.Core.PriceLists.Model
 {
-    class PriceList
+    public class PriceList
     {
         int id;
         DateTime startDate;

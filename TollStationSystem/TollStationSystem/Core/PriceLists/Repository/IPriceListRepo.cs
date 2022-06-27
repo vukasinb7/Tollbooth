@@ -3,7 +3,7 @@ using TollStationSystem.Core.PriceLists.Model;
 
 namespace TollStationSystem.Core.PriceLists.Repository
 {
-    interface IPriceListRepo
+    public interface IPriceListRepo
     {
         List<PriceList> PriceLists { get; }
 

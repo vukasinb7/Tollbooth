@@ -3,7 +3,7 @@ using TollStationSystem.Core.Payments.Model;
 
 namespace TollStationSystem.Core.Payments.Repository
 {
-    interface IPaymentRepo
+    public interface IPaymentRepo
     {
         List<Payment> Payments { get; }
 

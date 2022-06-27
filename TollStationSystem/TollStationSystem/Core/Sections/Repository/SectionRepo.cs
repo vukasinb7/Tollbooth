@@ -6,7 +6,7 @@ using TollStationSystem.Core.Sections.Model;
 
 namespace TollStationSystem.Core.Sections.Repository
 {
-    class SectionRepo : ISectionRepo
+    public class SectionRepo : ISectionRepo
     {
         List<Section> sections;
         string path;

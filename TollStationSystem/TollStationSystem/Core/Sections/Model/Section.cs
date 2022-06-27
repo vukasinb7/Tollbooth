@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace TollStationSystem.Core.Sections.Model
 {
-    class Section
+    public class Section
     {
         int id;
         int entranceStation;

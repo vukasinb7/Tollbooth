@@ -6,7 +6,7 @@ using TollStationSystem.Core.Payments.Model;
 
 namespace TollStationSystem.Core.Payments.Repository
 {
-    class PaymentRepo : IPaymentRepo
+    public class PaymentRepo : IPaymentRepo
     {
         List<Payment> payments;
         string path;

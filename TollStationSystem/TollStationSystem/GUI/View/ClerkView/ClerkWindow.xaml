@@ -8,6 +8,41 @@
         Title="ClerkWindow" Height="453" Width="698" FontWeight="Bold" FontSize="20">
     <Grid>
         <TabControl>
+            <TabItem Header="Toll Collection">
+                <Grid Background="#FFE5E5E5" >
+                    <Label Content="Exit station" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" />
+                    <TextBlock Name="ExitStationText" HorizontalAlignment="Left" Margin="200,35,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
+
+                    <Label Content="Entrance station" HorizontalAlignment="Left" Margin="350,30,0,0" VerticalAlignment="Top"/>
+                    <ComboBox Name="StationsComboBox" HorizontalAlignment="Left" Margin="520,32,0,0" VerticalAlignment="Top" Width="126"/>
+
+                    <Label Content="Entrance time" HorizontalAlignment="Left" Margin="30,80,0,0" VerticalAlignment="Top"/>
+                    <TextBox Name="EntranceHourBox" HorizontalAlignment="Left" Margin="200,84,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"/>
+                    <TextBox Name="EntranceMinBox" HorizontalAlignment="Left" Margin="272,84,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"/>
+
+                    <Label Content="Vehicle type" HorizontalAlignment="Left" Margin="350,80,0,0" VerticalAlignment="Top"/>
+                    <ComboBox Name="VehiclesComboBox" HorizontalAlignment="Left" Margin="520,82,0,0" VerticalAlignment="Top" Width="126"/>
+
+                    <Button Content="Calculate price" HorizontalAlignment="Center" Margin="0,134,0,0" VerticalAlignment="Top" Width="302"/>
+
+                    <Label Content="Plates" HorizontalAlignment="Left" Margin="408,230,0,0" VerticalAlignment="Top"/>
+                    <TextBlock Name="PlatesText" HorizontalAlignment="Left" Margin="520,235,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
+
+                    <Label Content="Price" HorizontalAlignment="Left" Margin="30,180,0,0" VerticalAlignment="Top"/>
+                    <TextBlock Name="PriceText" HorizontalAlignment="Left" Margin="200,185,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
+
+                    <Label Content="Paid" HorizontalAlignment="Left" Margin="30,230,0,0" VerticalAlignment="Top" />
+                    <TextBox Name="PaidBox" HorizontalAlignment="Left" Margin="200,234,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
+
+                    <Button Content="Charge" HorizontalAlignment="Left" Margin="30,283,0,0" VerticalAlignment="Top" Width="296"/>
+
+                    <Label Content="Change" HorizontalAlignment="Left" Margin="23,330,0,0" VerticalAlignment="Top"/>
+                    <TextBlock Name="ChangeText" HorizontalAlignment="Left" Margin="200,330,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
+
+                    <Label Content="Speep" HorizontalAlignment="Left" Margin="406,280,0,0" VerticalAlignment="Top" />
+                    <TextBlock Name="SpeedText" HorizontalAlignment="Left" Margin="520,285,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
+                </Grid>
+            </TabItem>
             <TabItem Header="Ramps">
                 <Grid Background="#FFE5E5E5">
                     <Label Content="Ramps" HorizontalAlignment="Left" Margin="174,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.561,-1.189" FontSize="15"/>

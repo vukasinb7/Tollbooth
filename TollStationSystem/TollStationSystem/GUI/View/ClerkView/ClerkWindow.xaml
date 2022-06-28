@@ -12,7 +12,7 @@
                 <Grid Background="#FFE5E5E5">
                     <Label Content="Ramps" HorizontalAlignment="Left" Margin="174,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.561,-1.189" FontSize="15"/>
                     <ListBox x:Name="RampStatusList" HorizontalAlignment="Center" Width="344" Height="226" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" SelectionChanged="RampStatusList_SelectionChanged" FontSize="15"/>
-                    <Button x:Name="ReportRampMalfunction" Content="Report malfunction" HorizontalAlignment="Center" Margin="0,342,0,0" VerticalAlignment="Top" Width="344" FontSize="15"/>
+                    <Button x:Name="ReportRampMalfunction" Content="Report malfunction" HorizontalAlignment="Center" Margin="0,341,0,0" VerticalAlignment="Top" Width="344" FontSize="15" Height="31"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Other devices">

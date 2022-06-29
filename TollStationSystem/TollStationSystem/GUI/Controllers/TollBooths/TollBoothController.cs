@@ -40,5 +40,15 @@ namespace TollStationSystem.GUI.Controllers.TollBooths
         {
             tollBoothService.Serialize();
         }
+
+        public List<TollBooth> GetAllFromStation(TollStation tollStation)
+        {
+            return tollBoothService.GetAllFromStation(tollStation);
+        }
+
+        public void Fix(TollBooth tollBooth)
+        {
+            tollBoothService.Fix(tollBooth);
+        }
     }
 }

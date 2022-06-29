@@ -13,10 +13,13 @@ namespace TollStationSystem.Core.PriceLists.Service
         int GenerateId();
         void Load();
         void Serialize();
+
         List<PriceList> SortedByStartDate();
 
         PriceList GetActive(DateTime date);
 
         List<Price> GetPricesBySection(int sectionId);
+
+        Price GetPriceBySectionId(int sectionId, VehicleType vt);
     }
 }

@@ -48,5 +48,10 @@ namespace TollStationSystem.GUI.Controllers.Sections
         {
             sectionService.Delete(section);
         }
+        
+        internal Section GetSectionByStations(int entranceId, int exitId)
+        {
+            return sectionService.GetSectionByStations(entranceId, exitId);
+        }
     }
 }

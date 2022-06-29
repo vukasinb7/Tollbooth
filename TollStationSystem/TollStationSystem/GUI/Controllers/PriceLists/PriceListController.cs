@@ -53,5 +53,10 @@ namespace TollStationSystem.GUI.Controllers.PriceLists
         {
             return priceListService.GetPricesBySection(sectionId);
         }
+        
+        internal Price GetPriceBySectionId(int id, VehicleType vehicleType)
+        {
+            return priceListService.GetPriceBySectionId(id, vehicleType);
+        }
     }
 }

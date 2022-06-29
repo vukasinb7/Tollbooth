@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TollStationSystem.Core.Devices.Model;
 using TollStationSystem.Core.TollBooths.Model;
 using TollStationSystem.Core.TollBooths.Service;
 using TollStationSystem.Core.TollStations.Model;
@@ -47,7 +48,6 @@ namespace TollStationSystem.GUI.Controllers.TollBooths
             tollBoothService.Serialize();
         }
 
-
         public bool AlreadyExist(int stationId, int number)
         {
             return tollBoothService.AlreadyExist(stationId, number);
@@ -56,6 +56,21 @@ namespace TollStationSystem.GUI.Controllers.TollBooths
         public void Update(TollBoothDto tollBoothDto)
         {
             tollBoothService.Update(tollBoothDto);
+        }
+        
+        public Device FindBoothRamp(int stationId, int boothNumber)
+        {
+            return tollBoothService.FindBoothRamp(stationId, boothNumber);
+        }
+
+        public List<Device> DevicesByBooth(int stationId, int boothNumber)
+        {
+            return tollBoothService.FindDevices(stationId, boothNumber);
+        }
+
+        public List<Device> FindNonRampDevices(int stationId, int boothNumber)
+        {
+            return tollBoothService.FindNonRampDevices(stationId, boothNumber);
         }
 
     }

@@ -44,5 +44,10 @@ namespace TollStationSystem.Core.Sections.Service
         {
             sectionRepo.Serialize();
         }
+
+        public void Delete(Section section)
+        {
+            sectionRepo.Delete(section);
+        }
     }
 }

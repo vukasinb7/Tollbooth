@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TollStationSystem.Core.Devices.Model;
 using TollStationSystem.Core.Locations.Model;
+using TollStationSystem.Core.PriceLists.Model;
+using TollStationSystem.Core.Sections.Model;
 using TollStationSystem.Core.TollBooths.Model;
 using TollStationSystem.Core.TollStations.Model;
+using TollStationSystem.Core.Users.Model;
 using TollStationSystem.Database;
 using TollStationSystem.GUI.Controllers.Devices;
 using TollStationSystem.GUI.Controllers.Locations;
@@ -41,10 +35,85 @@ namespace TollStationSystem.GUI.View.AdministratorView
 
         private Dictionary<int, TollStation> indexedTollStations;
         private Dictionary<int, TollBooth> indexedTollBooths;
-        public AdministratorWindow()
+        public AdministratorWindow(ServiceBuilder serviceBuilder)
         {
+            this.serviceBuilder = serviceBuilder;
             InitializeComponent();
+            InitializeControllers();
+            InitializeCb();
+            InitializeTollBoothCb();
+            InitilaizeTollBoothType();
+            InitializeTollBoothLb();
+            InitializeTollStationsCb();
+
+            UpdateTollBoothBtn.IsEnabled = false;
+            deleteTollBoothBtn.IsEnabled = false;
+            malfunctioningTollBoothCh.IsChecked = false;
+
         }
+
+        void InitializeControllers()
+        {
+            sectionCotroller = new(serviceBuilder.SectionService);
+            tollStationController = new(serviceBuilder.TollStationService);
+            priceListController = new(serviceBuilder.PriceListService);
+            locationController = new(serviceBuilder.LocationService);
+            tollBoothController = new(serviceBuilder.TollBoothService);
+            bossController = new(serviceBuilder.BossService);
+            deviceController = new(serviceBuilder.DeviceService);
+
+        }
+
+        #region PriceList
+        void InitializeCb()
+        {
+            foreach (Section section in sectionCotroller.Sections)
+            {
+                sectionCb.Items.Add(section.Id);
+            }
+
+            sectionCb.SelectedIndex = 0;
+        }
+
+        void DisplaySectionData(int sectionId)
+        {
+            Section section = sectionCotroller.FindById(sectionId);
+            TollStation entranceStation = tollStationController.FindById(section.EntranceStation);
+            TollStation exitStation = tollStationController.FindById(section.ExitStation);
+            entryTb.Text = entranceStation.Name;
+            exitTb.Text = exitStation.Name;
+        }
+
+        void DisplayPrices(int sectionId)
+        {
+            priceInformationLb.Items.Clear();
+            List<Price> prices = priceListController.GetPricesBySection(sectionId);
+            foreach (Price price in prices)
+            {
+                priceInformationLb.Items.Add("Vechile type: " + price.VehicleType1 + ", EUR: "
+                    + price.PriceEur + ", RSD: " + price.PriceDin);
+            }
+        }
+
+        private void sectionCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sectionCb.SelectedIndex != -1)
+            {
+                DisplaySectionData((int)sectionCb.SelectedItem);
+                DisplayPrices((int)sectionCb.SelectedItem);
+                DisplayPriceListDate();
+            }
+
+        }
+
+        private void DisplayPriceListDate()
+        {
+            PriceList activePriceList = priceListController.GetActive(DateTime.Today);
+
+            startDateLbl.Content = activePriceList.StartDate.ToString("dd.MM.yyyy.");
+        }
+        #endregion
+
         #region TollBooth
         private void InitializeTollBoothCb()
         {
@@ -179,6 +248,71 @@ namespace TollStationSystem.GUI.View.AdministratorView
             tollBoothController.Delete(tollBooth.TollStationId, tollBooth.Number);
             InitializeTollBoothLb();
         }
+        #endregion
+
+        #region TollStations
+
+        void InitializeTollStationsCb()
+        {
+            tollStationCb.Items.Clear();
+            foreach (TollStation tollStation in tollStationController.TollStations)
+            {
+                tollStationCb.Items.Add(tollStation.Id);
+            }
+            tollStationCb.SelectedIndex = 0;
+        }
+
+        void DisplayTollStationData()
+        {
+            TollStation tollStation = tollStationController.FindById((int)tollStationCb.SelectedItem);
+            tollStationNameTb.Text = tollStation.Name;
+            Boss boss = bossController.FindByJmbg(tollStation.BossJmbg);
+            tollStationBossTb.Text = boss.Name + " " + boss.LastName;
+            Location location = locationController.FindByZip(tollStation.LocationZip);
+            countryTb.Text = location.Country;
+            cityTb.Text = location.Name;
+        }
+
+        private void tollStationCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tollStationCb.SelectedIndex != -1)
+            {
+                DisplayTollStationData();
+            }
+        }
+
+        private void refreshTollStationsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            InitializeTollStationsCb();
+        }
+
+        private void deleteTollStationBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Delete Toll station?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                tollStationController.Delete(tollStationController.FindById((int)tollStationCb.SelectedItem));
+                MessageBox.Show("Toll station deleted sucessfully!");
+                InitializeTollStationsCb();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void updateTollStationBtn_Click(object sender, RoutedEventArgs e)
+        {
+            tollStationController.Update(tollStationNameTb.Text, tollStationController.FindById((int)tollStationCb.SelectedItem));
+            MessageBox.Show("Toll station updated sucessfully!");
+            DisplayTollStationData();
+        }
+
+        private void createTollStationBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Window createNewStationWin = new CreateStationWindow(serviceBuilder);
+            createNewStationWin.Show();
+        }
+
         #endregion
     }
 }

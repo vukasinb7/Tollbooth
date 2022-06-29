@@ -43,5 +43,15 @@ namespace TollStationSystem.GUI.Controllers.PriceLists
         {
             priceListService.Serialize();
         }
+
+        public PriceList GetActive(DateTime date)
+        {
+            return priceListService.GetActive(date);
+        }
+
+        public List<Price> GetPricesBySection(int sectionId)
+        {
+            return priceListService.GetPricesBySection(sectionId);
+        }
     }
 }

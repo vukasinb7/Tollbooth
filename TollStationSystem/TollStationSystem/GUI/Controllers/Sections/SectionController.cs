@@ -43,5 +43,10 @@ namespace TollStationSystem.GUI.Controllers.Sections
         {
             sectionService.Serialize();
         }
+
+        public void Delete(Section section)
+        {
+            sectionService.Delete(section);
+        }
     }
 }

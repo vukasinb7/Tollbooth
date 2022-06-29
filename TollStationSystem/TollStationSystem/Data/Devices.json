@@ -20,7 +20,7 @@
   {
     "id": 1004,
     "name": "RampB",
-    "malfunctioning": false,
+    "malfunctioning": true,
     "deviceType": 0
   },
   {

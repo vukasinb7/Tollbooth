@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using TollStationSystem.GUI.DTO;
 
 namespace TollStationSystem.Core.TollStations.Model
 {
@@ -27,6 +28,16 @@ namespace TollStationSystem.Core.TollStations.Model
             this.locationZip = locationZip;
             this.users = users;
             this.tollBooths = tollBooths;
+        }
+
+        public TollStation(TollStationDto tollStationDto)
+        {
+            id = tollStationDto.Id;
+            name = tollStationDto.Name;
+            bossJmbg = tollStationDto.BossJmbg;
+            locationZip = tollStationDto.LocationZip;
+            users = new();
+            tollBooths = new();
         }
 
         [JsonPropertyName("id")]

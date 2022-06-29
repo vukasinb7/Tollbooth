@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using TollStationSystem.Core.TollBooths.Model;
 using TollStationSystem.Core.Devices.Model;
 using TollStationSystem.Core.TollStations.Model;
+using TollStationSystem.Core.Users.Model;
+using TollStationSystem.GUI.DTO;
 
 namespace TollStationSystem.Core.TollStations.Service
 {
@@ -10,6 +13,8 @@ namespace TollStationSystem.Core.TollStations.Service
 
         void Add(TollStation tollStation);
 
+        void Add(TollStationDto tollStationDto);
+
         TollStation FindById(int id);
 
         int GenerateId();
@@ -18,6 +23,14 @@ namespace TollStationSystem.Core.TollStations.Service
 
         void Serialize();
 
+        void RemoveTollBooth(TollBooth tollBooth, TollStation tollStation);
+
+        void Delete(TollStation tollStation);
+
+        void Update(string name, TollStation tollStation);
+
+        List<Boss> AvailableBosses();
+
         TollStation FindByWorkerJmbg(string jmbg);
 
         Dictionary<Device, int> FindRamps(int stationId);
@@ -25,5 +38,6 @@ namespace TollStationSystem.Core.TollStations.Service
         Dictionary<Device, int> FindDevices(int stationId);
 
         Dictionary<Device, int> FindNonRampDevices(int stationId);
+
     }
 }

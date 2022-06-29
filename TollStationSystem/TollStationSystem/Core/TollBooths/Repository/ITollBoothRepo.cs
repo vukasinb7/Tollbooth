@@ -17,5 +17,9 @@ namespace TollStationSystem.Core.TollBooths.Repository
         void Load();
 
         void Serialize();
+
+        public void Delete(TollBooth tollBooth);
+
+        public bool AlreadyExist(int stationId, int number);
     }
 }

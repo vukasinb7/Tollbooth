@@ -2,6 +2,7 @@
 using TollStationSystem.Core.Devices.Model;
 using TollStationSystem.Core.TollBooths.Model;
 using TollStationSystem.Core.TollStations.Model;
+using TollStationSystem.GUI.DTO;
 
 namespace TollStationSystem.Core.TollBooths.Service
 {
@@ -9,9 +10,9 @@ namespace TollStationSystem.Core.TollBooths.Service
     {
         List<TollBooth> TollBooths { get; }
 
-        void Add(TollBooth tollBooth);
+        void Add(GUI.DTO.TollBoothDto tollBooth);
 
-        TollBooth FindById(int stationId, int boothNumber);
+        Model.TollBooth FindById(int stationId, int boothNumber);
 
         int GenerateNum(TollStation tollStation);
 
@@ -19,10 +20,16 @@ namespace TollStationSystem.Core.TollBooths.Service
 
         void Serialize();
 
+        public bool AlreadyExist(int stationId, int number);
+        public void Delete(int stationId, int number);
+
+        void Update(TollBoothDto tollBoothDto);
+
         Device FindBoothRamp(int stationId, int boothNumber);
 
         List<Device> FindDevices(int stationId, int boothNumber);
 
         List<Device> FindNonRampDevices(int stationId, int boothNumber);
+
     }
 }

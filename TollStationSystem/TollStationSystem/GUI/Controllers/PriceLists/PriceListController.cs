@@ -44,6 +44,16 @@ namespace TollStationSystem.GUI.Controllers.PriceLists
             priceListService.Serialize();
         }
 
+        public PriceList GetActive(DateTime date)
+        {
+            return priceListService.GetActive(date);
+        }
+
+        public List<Price> GetPricesBySection(int sectionId)
+        {
+            return priceListService.GetPricesBySection(sectionId);
+        }
+        
         internal Price GetPriceBySectionId(int id, VehicleType vehicleType)
         {
             return priceListService.GetPriceBySectionId(id, vehicleType);

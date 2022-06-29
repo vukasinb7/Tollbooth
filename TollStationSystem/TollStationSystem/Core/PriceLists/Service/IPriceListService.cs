@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TollStationSystem.Core.PriceLists.Model;
 
 namespace TollStationSystem.Core.PriceLists.Service
@@ -12,6 +13,13 @@ namespace TollStationSystem.Core.PriceLists.Service
         int GenerateId();
         void Load();
         void Serialize();
+
+        List<PriceList> SortedByStartDate();
+
+        PriceList GetActive(DateTime date);
+
+        List<Price> GetPricesBySection(int sectionId);
+
         Price GetPriceBySectionId(int sectionId, VehicleType vt);
     }
 }

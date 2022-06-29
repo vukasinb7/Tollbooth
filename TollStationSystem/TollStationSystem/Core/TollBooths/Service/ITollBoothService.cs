@@ -20,5 +20,7 @@ namespace TollStationSystem.Core.TollBooths.Service
         void Serialize();
 
         Device FindBoothRamp(int stationId, int boothNumber);
+
+        List<Device> DevicesByBooth(int stationId, int boothNumber);
     }
 }

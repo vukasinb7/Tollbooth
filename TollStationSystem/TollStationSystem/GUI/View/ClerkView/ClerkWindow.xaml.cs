@@ -20,6 +20,7 @@ namespace TollStationSystem.GUI.View.ClerkView
         BrushConverter brushConverter;
 
         Dictionary<string, Device> rampDisplay;
+        Dictionary<string, Device> deviceDisplay;
 
         public ClerkWindow(TollStation station, ServiceBuilder serviceBuilder)
         {
@@ -33,8 +34,10 @@ namespace TollStationSystem.GUI.View.ClerkView
             InitializeRamps();
             InitializeRampBooths();
             RampMalfunctionBtn.IsEnabled = false;
-            RampText.IsReadOnly = true;
 
+            InitializeDevices();
+            IntializeDeviceBooths();
+            DeviceMalfunctionBtn.IsEnabled = false;
         }
 
         private void InitializeControllers(ServiceBuilder serviceBuilder)
@@ -66,45 +69,35 @@ namespace TollStationSystem.GUI.View.ClerkView
                 RampBoothComboBox.Items.Add(boothNum);
         }
 
-        private void RampStatusList_SelectionChanged(object sender, 
-            System.Windows.Controls.SelectionChangedEventArgs e)
+        private void InitializeDevices()
         {
-            if (RampStatusList.SelectedIndex != -1)
+            DeviceStatusList.Items.Clear();
+            deviceDisplay = new Dictionary<string, Device>();
+            foreach (int boothNum in station.TollBooths)
             {
-                Device ramp = rampDisplay[RampStatusList.SelectedItem.ToString()];
-                RampText.Text = RampStatusList.SelectedItem.ToString();
-                if (ramp.Malfunctioning)
+                List<Device> devices = tollBoothController.DevicesByBooth(station.Id, boothNum);
+                foreach (Device device in devices)
                 {
-                    RampMalfunctionBtn.IsEnabled = false;
-                    RampText.Background = (Brush)brushConverter.ConvertFrom("#ff0000");
-                    return;
+                    if (device.DeviceType != DeviceType.RAMP)
+                    {
+                        string functioning = "functioning";
+                        if (device.Malfunctioning)
+                            functioning = "malfunctioning";
+                        string display = "booth: " + boothNum + ", " + device.Name + " - " + functioning;
+                        DeviceStatusList.Items.Add(display);
+                        deviceDisplay.Add(display, device);
+                    }
                 }
-                RampMalfunctionBtn.IsEnabled = true;
-                RampText.Background = (Brush)brushConverter.ConvertFrom("#98fb98");
             }
         }
 
-        private void RampMalfunctionBtn_Click(object sender, RoutedEventArgs e)
+        private void IntializeDeviceBooths()
         {
-            Device ramp = rampDisplay[RampStatusList.SelectedItem.ToString()];
-            deviceController.ReportMalfunction(ramp.Id);
-            RampText.Background = (Brush)brushConverter.ConvertFrom("#ff0000");
-
-            MessageBox.Show("Malfunction reported.");
-            InitializeRamps();
+            foreach (int boothNum in station.TollBooths)
+                DeviceBoothComboBox.Items.Add(boothNum);
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (MessageBox.Show("Log out?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                MainWindow main = new MainWindow();
-                main.Show();
-            }
-            else e.Cancel = true;
-        }
-
-        private void RampBoothComboBox_SelectionChanged(object sender, 
+        private void RampBoothComboBox_SelectionChanged(object sender,
             System.Windows.Controls.SelectionChangedEventArgs e)
         {
             RampStatusList.Items.Clear();
@@ -122,5 +115,106 @@ namespace TollStationSystem.GUI.View.ClerkView
                     rampDisplay.Add(display, ramp);
                 }
         }
+
+        private void ResetRampsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            InitializeRamps();
+        }
+
+        private void RampStatusList_SelectionChanged(object sender, 
+            System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (RampStatusList.SelectedIndex != -1)
+            {
+                Device ramp = rampDisplay[RampStatusList.SelectedItem.ToString()];
+                RampLabel.Content = RampStatusList.SelectedItem.ToString();
+                if (ramp.Malfunctioning)
+                {
+                    RampMalfunctionBtn.IsEnabled = false;
+                    RampLabel.Foreground = (Brush)brushConverter.ConvertFrom("#ff0000");
+                    return;
+                }
+                RampMalfunctionBtn.IsEnabled = true;
+                RampLabel.Foreground = (Brush)brushConverter.ConvertFrom("#98fb98");
+            }
+        }
+
+        private void RampMalfunctionBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Device ramp = rampDisplay[RampStatusList.SelectedItem.ToString()];
+            deviceController.ReportMalfunction(ramp.Id);
+            RampLabel.Foreground = (Brush)brushConverter.ConvertFrom("#ff0000");
+
+            MessageBox.Show("Malfunction reported.");
+            InitializeRamps();
+        }
+
+        private void DeviceBoothComboBox_SelectionChanged(object sender,
+            System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            DeviceStatusList.Items.Clear();
+            deviceDisplay = new Dictionary<string, Device>();
+            int chosenBooth = (int)DeviceBoothComboBox.SelectedItem;
+            foreach (int boothNumber in station.TollBooths)
+                if (chosenBooth == boothNumber)
+                {
+                    List<Device> devices = tollBoothController.DevicesByBooth(station.Id, boothNumber);
+                    foreach (Device device in devices)
+                    {
+                        if (device.DeviceType != DeviceType.RAMP)
+                        {
+                            string functioning = "functioning";
+                            if (device.Malfunctioning)
+                                functioning = "malfunctioning";
+                            string display = "booth: " + boothNumber + ", " + device.Name + " - " + functioning;
+                            DeviceStatusList.Items.Add(display);
+                            deviceDisplay.Add(display, device);
+                        }
+                    }
+                }
+        }
+
+        private void ResetDevicesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            InitializeDevices();
+        }
+
+        private void DeviceStatusList_SelectionChanged(object sender,
+            System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (DeviceStatusList.SelectedIndex != -1)
+            {
+                Device device = deviceDisplay[DeviceStatusList.SelectedItem.ToString()];
+                DeviceLabel.Content = DeviceStatusList.SelectedItem.ToString();
+                if (device.Malfunctioning)
+                {
+                    DeviceMalfunctionBtn.IsEnabled = false;
+                    DeviceLabel.Foreground = (Brush)brushConverter.ConvertFrom("#ff0000");
+                    return;
+                }
+                DeviceMalfunctionBtn.IsEnabled = true;
+                DeviceLabel.Foreground = (Brush)brushConverter.ConvertFrom("#00D100");
+            }
+        }
+
+        private void DeviceMalfunctionBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Device device = deviceDisplay[DeviceStatusList.SelectedItem.ToString()];
+            deviceController.ReportMalfunction(device.Id);
+            DeviceLabel.Foreground = (Brush)brushConverter.ConvertFrom("#ff0000");
+
+            MessageBox.Show("Malfunction reported.");
+            InitializeDevices();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Log out?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                MainWindow main = new MainWindow();
+                main.Show();
+            }
+            else e.Cancel = true;
+        }   
     }
 }

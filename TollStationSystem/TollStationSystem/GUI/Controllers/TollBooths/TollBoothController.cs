@@ -46,5 +46,10 @@ namespace TollStationSystem.GUI.Controllers.TollBooths
         {
             return tollBoothService.FindBoothRamp(stationId, boothNumber);
         }
+
+        public List<Device> DevicesByBooth(int stationId, int boothNumber)
+        {
+            return tollBoothService.DevicesByBooth(stationId, boothNumber);
+        }
     }
 }

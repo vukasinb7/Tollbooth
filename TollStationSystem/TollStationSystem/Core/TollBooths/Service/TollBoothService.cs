@@ -57,5 +57,16 @@ namespace TollStationSystem.Core.TollBooths.Service
 
             return null;
         }
+
+        public List<Device> DevicesByBooth(int stationId, int boothNumber)
+        {
+            List<Device> filtered = new();
+
+            TollBooth tollBooth = FindById(stationId, boothNumber);
+            foreach (int deviceId in tollBooth.Devices)
+                filtered.Add(deviceService.FindById(deviceId));
+
+            return filtered;
+        }
     }
 }

@@ -43,5 +43,41 @@ namespace TollStationSystem.Core.PriceLists.Service
         {
             priceListRepo.Add(priceList);
         }
+        public Price GetPriceBySectionId(int sectionId, VehicleType vt, DateTime date)
+        {
+
+            foreach (Price price in GetActive(date).Prices)
+            {
+                if (price.SectionId == sectionId && price.VehicleType1 == vt)
+                    return price;
+            }
+
+            return null;
+        }
+
+        public Price GetPriceBySectionId(int sectionId, VehicleType vt)
+        {
+
+            foreach (Price price in GetActive(DateTime.Now).Prices)
+            {
+                if (price.SectionId == sectionId && price.VehicleType1 == vt)
+                    return price;
+            }
+
+            return null;
+        }
+
+        public PriceList GetActive(DateTime date)
+        {
+            foreach (PriceList priceList in SortedByStartDate())
+            {
+                if (priceList.StartDate <= date) return priceList;
+            }
+            return null;
+        }
+        public List<PriceList> SortedByStartDate()
+        {
+            return priceListRepo.PriceLists.OrderByDescending(x => x.StartDate).ToList();
+        }
     }
 }

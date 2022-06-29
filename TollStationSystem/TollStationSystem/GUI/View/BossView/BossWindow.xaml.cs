@@ -17,6 +17,7 @@ using TollStationSystem.Core.TollStations.Model;
 using TollStationSystem.Core.Users.Model;
 using TollStationSystem.Database;
 using TollStationSystem.GUI.Controllers.Devices;
+using TollStationSystem.GUI.Controllers.Payments;
 using TollStationSystem.GUI.Controllers.TollBooths;
 using TollStationSystem.GUI.Controllers.TollStations;
 
@@ -31,6 +32,7 @@ namespace TollStationSystem.GUI.View.BossView
         TollStationController tollStationController;
         TollStation tollStation;
         DeviceController deviceController;
+        PaymentController paymentController;
 
         public BossWindow(ServiceBuilder serviceBuilder, User boss)
         {
@@ -48,6 +50,7 @@ namespace TollStationSystem.GUI.View.BossView
             tollBoothController = new(serviceBuilder.TollBoothService);
             deviceController = new(serviceBuilder.DeviceService);
             tollStationController = new(serviceBuilder.TollStationService);
+            paymentController = new(serviceBuilder.PaymentService);
         }
 
         #region TollBoothState
@@ -136,5 +139,35 @@ namespace TollStationSystem.GUI.View.BossView
 
 
         #endregion
+
+        #region Report
+        private void SearchIncomeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime from = fromIncomeDp.SelectedDate.Value;
+            DateTime to = toIncomeDp.SelectedDate.Value;
+            if (from > to)
+            {
+                MessageBox.Show("Invalid date interval");
+                return;
+            }
+
+            Tuple<float, float> prices = paymentController.FindSumOfPayments(tollStation.Id, from, to);
+            dinIncomeTb.Text = prices.Item1.ToString() + "RSD";
+            eurIncomeTb.Text = prices.Item2.ToString() + "EUR";
+        }
+
+
+        #endregion
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Log out?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                MainWindow main = new MainWindow();
+                main.Show();
+            }
+            else e.Cancel = true;
+        }
+
     }
 }

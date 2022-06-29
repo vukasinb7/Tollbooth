@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TollStationSystem.Core.Devices.Model;
 using TollStationSystem.Core.TollBooths.Model;
 using TollStationSystem.Core.TollStations.Model;
 
@@ -17,5 +18,7 @@ namespace TollStationSystem.Core.TollBooths.Service
         void Load();
 
         void Serialize();
+
+        Device FindBoothRamp(int stationId, int boothNumber);
     }
 }

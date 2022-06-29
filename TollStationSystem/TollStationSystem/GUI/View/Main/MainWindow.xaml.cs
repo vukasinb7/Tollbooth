@@ -18,6 +18,7 @@ namespace TollStationSystem
         {
             serviceBuilder = new();
             userController = new(serviceBuilder.UserService);
+            tollStationController = new(serviceBuilder.TollStationService);
             InitializeComponent();
         }
 

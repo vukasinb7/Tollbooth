@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TollStationSystem.GUI.View.ClerkView"
         mc:Ignorable="d"
-        Title="ClerkWindow" Height="453" Width="698" FontWeight="Bold" FontSize="20">
+        Title="ClerkWindow" Height="511" Width="692" FontWeight="Bold" FontSize="20" Closing="Window_Closing">
     <Grid>
         <TabControl>
             <TabItem Header="Toll Collection">
@@ -45,16 +45,24 @@
             </TabItem>
             <TabItem Header="Ramps">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="Ramps" HorizontalAlignment="Left" Margin="174,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.561,-1.189" FontSize="20"/>
-                    <ListBox x:Name="RampStatusList" HorizontalAlignment="Center" Width="344" Height="226" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" SelectionChanged="RampStatusList_SelectionChanged" FontSize="20" FontWeight="Normal"/>
-                    <Button x:Name="ReportRampMalfunction" Content="Report malfunction" HorizontalAlignment="Center" Margin="0,341,0,0" VerticalAlignment="Top" Width="344" FontSize="20" Height="31" Click="ReportRampMalfunction_Click"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="186*"/>
+                        <RowDefinition Height="271*"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Ramps" HorizontalAlignment="Left" Margin="122,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.561,-1.189" FontSize="20"/>
+                    <Label Content="Ramp" HorizontalAlignment="Left" Margin="122,128,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+                    <TextBox x:Name="RampText" HorizontalAlignment="Left" Margin="192,132,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="350" FontWeight="Normal" Grid.Row="1"/>
+                    <Button x:Name="RampMalfunctionBtn" Content="Report malfunction" HorizontalAlignment="Left" Margin="122,182,0,0" VerticalAlignment="Top" Width="420" FontSize="20" Height="31" Click="RampMalfunctionBtn_Click" Grid.Row="1"/>
+                    <ListBox x:Name="RampStatusList" HorizontalAlignment="Left" Width="420" Height="226" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" SelectionChanged="RampStatusList_SelectionChanged" FontSize="20" FontWeight="Normal" Margin="122,72,0,0" Grid.RowSpan="2" />
                 </Grid>
             </TabItem>
             <TabItem Header="Other devices">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="Other devices" HorizontalAlignment="Left" Margin="174,35,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.561,-1.189" FontSize="20"/>
-                    <ListBox x:Name="DeviceStatusList" HorizontalAlignment="Center" Width="344" Height="226" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" SelectionChanged="RampStatusList_SelectionChanged" FontSize="20" FontWeight="Normal"/>
-                    <Button x:Name="ReportDeviceMalfunction" Content="Report malfunction" HorizontalAlignment="Center" Margin="0,341,0,0" VerticalAlignment="Top" Width="344" FontSize="20" Height="31"/>
+                    <Label Content="Other devices" HorizontalAlignment="Left" Margin="122,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.561,-1.189" FontSize="20"/>
+                    <ListBox x:Name="DeviceStatusList" HorizontalAlignment="Left" Width="420" Height="226" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontSize="20" FontWeight="Normal" Margin="122,72,0,0" />
+                    <Label Content="Device" HorizontalAlignment="Left" Margin="122,314,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="DeviceText" HorizontalAlignment="Left" Margin="200,318,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" FontWeight="Normal"/>
+                    <Button x:Name="DeviceMalfunctionBtn" Content="Report malfunction" HorizontalAlignment="Left" Margin="122,369,0,0" VerticalAlignment="Top" Width="420" FontSize="20" Height="31"/>
                 </Grid>
             </TabItem>
         </TabControl>

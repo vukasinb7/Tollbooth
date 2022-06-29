@@ -57,5 +57,12 @@ namespace TollStationSystem.Core.Devices.Service
             devices.Add(tagReader);
             return devices;
         }
+
+        public void ReportMalfunction(int deviceId)
+        {
+            Device device = FindById(deviceId);
+            device.Malfunctioning = true;
+            Serialize();
+        }
     }
 }

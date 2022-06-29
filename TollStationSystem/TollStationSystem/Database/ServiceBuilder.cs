@@ -40,7 +40,7 @@ namespace TollStationSystem.Database
             priceListService = new PriceListService(tollBoothDatabase.PriceListRepo);
             sectionService = new SectionService(tollBoothDatabase.SectionRepo);
             speedingPenaltyService = new SpeedingPenaltyService(tollBoothDatabase.SpeedingPenaltyRepo);
-            tollBoothService = new TollBoothService(tollBoothDatabase.TollBoothRepo);
+            tollBoothService = new TollBoothService(tollBoothDatabase.TollBoothRepo, deviceService);
             bossService = new BossService(tollBoothDatabase.BossRepo);
             tollStationService = new TollStationService(tollBoothDatabase.TollStationRepo);
             paymentService = new PaymentService(tollBoothDatabase.PaymentRepo);

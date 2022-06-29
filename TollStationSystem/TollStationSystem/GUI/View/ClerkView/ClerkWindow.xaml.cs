@@ -31,6 +31,7 @@ namespace TollStationSystem.GUI.View.ClerkView
             InitializeComponent();
 
             InitializeRamps();
+            InitializeRampBooths();
             RampMalfunctionBtn.IsEnabled = false;
             RampText.IsReadOnly = true;
 
@@ -57,6 +58,12 @@ namespace TollStationSystem.GUI.View.ClerkView
                 RampStatusList.Items.Add(display);
                 rampDisplay.Add(display, ramp);
             }
+        }
+
+        private void InitializeRampBooths()
+        {
+            foreach (int boothNum in station.TollBooths)
+                RampBoothComboBox.Items.Add(boothNum);
         }
 
         private void RampStatusList_SelectionChanged(object sender, 
@@ -95,6 +102,25 @@ namespace TollStationSystem.GUI.View.ClerkView
                 main.Show();
             }
             else e.Cancel = true;
+        }
+
+        private void RampBoothComboBox_SelectionChanged(object sender, 
+            System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            RampStatusList.Items.Clear();
+            rampDisplay = new Dictionary<string, Device>();
+            int chosenBooth = (int)RampBoothComboBox.SelectedItem;
+            foreach (int boothNumber in station.TollBooths)
+                if (chosenBooth == boothNumber)
+                {
+                    Device ramp = tollBoothController.FindBoothRamp(station.Id, boothNumber);
+                    string functioning = "functioning";
+                    if (ramp.Malfunctioning)
+                        functioning = "malfunctioning";
+                    string display = "Booth: " + boothNumber + ", " + ramp.Name + " - " + functioning;
+                    RampStatusList.Items.Add(display);
+                    rampDisplay.Add(display, ramp);
+                }
         }
     }
 }

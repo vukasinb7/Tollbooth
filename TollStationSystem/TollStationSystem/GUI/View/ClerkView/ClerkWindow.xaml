@@ -54,6 +54,8 @@
                     <TextBox x:Name="RampText" HorizontalAlignment="Left" Margin="192,132,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="350" FontWeight="Normal" Grid.Row="1"/>
                     <Button x:Name="RampMalfunctionBtn" Content="Report malfunction" HorizontalAlignment="Left" Margin="122,182,0,0" VerticalAlignment="Top" Width="420" FontSize="20" Height="31" Click="RampMalfunctionBtn_Click" Grid.Row="1"/>
                     <ListBox x:Name="RampStatusList" HorizontalAlignment="Left" Width="420" Height="226" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" SelectionChanged="RampStatusList_SelectionChanged" FontSize="20" FontWeight="Normal" Margin="122,72,0,0" Grid.RowSpan="2" />
+                    <ComboBox x:Name="RampBoothComboBox" HorizontalAlignment="Left" Margin="422,22,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.584,0.062" SelectionChanged="RampBoothComboBox_SelectionChanged" FontWeight="Normal"/>
+                    <Label Content="Booth" HorizontalAlignment="Left" Margin="350,20,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Other devices">

@@ -12,5 +12,6 @@ namespace TollStationSystem.Core.Sections.Service
         int GenerateId();
         void Load();
         void Serialize();
+        Section GetSectionByStations(int entranceId, int exitId);
     }
 }

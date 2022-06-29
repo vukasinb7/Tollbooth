@@ -44,5 +44,16 @@ namespace TollStationSystem.Core.Sections.Service
         {
             sectionRepo.Serialize();
         }
+
+        public Section GetSectionByStations(int entranceId, int exitId)
+        {
+            foreach (Section section in Sections)
+            {
+                if (section.EntranceStation == entranceId && section.ExitStation == exitId)
+                    return section;
+            }
+
+            return null;
+        }
     }
 }

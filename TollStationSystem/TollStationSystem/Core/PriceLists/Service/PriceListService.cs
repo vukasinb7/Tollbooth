@@ -43,5 +43,18 @@ namespace TollStationSystem.Core.PriceLists.Service
         {
             priceListRepo.Add(priceList);
         }
+
+        public Price GetPriceBySectionId(int sectionId, VehicleType vt)
+        {
+
+            foreach (Price price in PriceLists[0].Prices)
+            {
+                if (price.SectionId == sectionId && price.VehicleType1 == vt)
+                    return price;
+            }
+
+            return null;
+        }
+
     }
 }

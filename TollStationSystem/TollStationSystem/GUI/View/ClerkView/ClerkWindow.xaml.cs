@@ -3,10 +3,19 @@ using System.Windows;
 using System.Windows.Media;
 using TollStationSystem.Core.Devices.Model;
 using TollStationSystem.Core.TollStations.Model;
+using TollStationSystem.Core.Payments.Model;
 using TollStationSystem.Database;
 using TollStationSystem.GUI.Controllers.Devices;
 using TollStationSystem.GUI.Controllers.TollBooths;
 using TollStationSystem.GUI.Controllers.TollStations;
+using TollStationSystem.GUI.Controllers.Sections;
+using TollStationSystem.GUI.Controllers.PriceLists;
+using TollStationSystem.GUI.Controllers.SpeedingPenalties;
+using TollStationSystem.GUI.Controllers.Payments;
+using TollStationSystem.Core.Sections.Model;
+using TollStationSystem.Core.PriceLists.Model;
+using System;
+using TollStationSystem.Core.SpeedingPenalties.Model;
 
 namespace TollStationSystem.GUI.View.ClerkView
 {
@@ -15,9 +24,15 @@ namespace TollStationSystem.GUI.View.ClerkView
         TollStationController tollStationController;
         DeviceController deviceController;
         TollBoothController tollBoothController;
+        SectionController sectionCotroller;
+        PriceListController priceListController;
+        PaymentController paymentController;
+        SpeedingPenaltyController speedingPenaltyController;
 
         TollStation station;
         BrushConverter brushConverter;
+        Payment payment;
+        float speed;
 
         Dictionary<string, Device> rampDisplay;
         Dictionary<string, Device> deviceDisplay;
@@ -38,6 +53,8 @@ namespace TollStationSystem.GUI.View.ClerkView
             InitializeDevices();
             IntializeDeviceBooths();
             DeviceMalfunctionBtn.IsEnabled = false;
+
+            InitializeStations();
         }
 
         private void InitializeControllers(ServiceBuilder serviceBuilder)
@@ -45,6 +62,11 @@ namespace TollStationSystem.GUI.View.ClerkView
             tollStationController = new(serviceBuilder.TollStationService);
             deviceController = new(serviceBuilder.DeviceService);
             tollBoothController = new(serviceBuilder.TollBoothService);
+            sectionCotroller = new(serviceBuilder.SectionService);
+            priceListController = new(serviceBuilder.PriceListService);
+            paymentController = new(serviceBuilder.PaymentService);
+            speedingPenaltyController = new(serviceBuilder.SpeedingPenaltyService);
+            deviceController = new(serviceBuilder.DeviceService);
         }
 
         private void InitializeRamps()
@@ -110,6 +132,23 @@ namespace TollStationSystem.GUI.View.ClerkView
             RampStatusList.Items.Add(display);
             rampDisplay.Add(display, ramp);
             
+        }
+
+        private void InitializeStations()
+        {
+            ExitStationText.Text = station.Name;
+
+            StationsComboBox.SelectedValuePath = "Key";
+            StationsComboBox.DisplayMemberPath = "Value";
+            foreach (TollStation tollStation in tollStationController.TollStations)
+            {
+                StationsComboBox.Items.Add(new KeyValuePair<int, string>(tollStation.Id, tollStation.Name));
+            }
+
+            foreach (string name in Enum.GetNames(typeof(VehicleType)))
+            {
+                VehiclesComboBox.Items.Add(name);
+            }
         }
 
         private void ResetRampsBtn_Click(object sender, RoutedEventArgs e)
@@ -206,6 +245,123 @@ namespace TollStationSystem.GUI.View.ClerkView
                 main.Show();
             }
             else e.Cancel = true;
-        }   
+        }
+
+        private void CalculateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (StationsComboBox.SelectedIndex == -1 || VehiclesComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Enter all parametars");
+                return;
+            }
+
+            try
+            {
+                int.Parse(EntranceHourBox.Text);
+                int.Parse(EntranceMinBox.Text);
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Enter all parametars");
+                return;
+            }
+
+            int exitId = station.Id;
+            int entranceId = int.Parse(StationsComboBox.SelectedValue.ToString());
+            VehicleType vehicleType = (VehicleType)VehiclesComboBox.SelectedIndex;
+            
+            Section section = sectionCotroller.GetSectionByStations(entranceId, exitId);
+            if(section == null)
+            {
+                MessageBox.Show("Not existing section.");
+                return;
+            }
+            
+            Price price = priceListController.GetPriceBySectionId(section.Id, vehicleType);
+            PriceText.Text = price.PriceDin.ToString();
+
+            SetPayment(vehicleType, exitId, section);
+
+            CheckSpeeding(section);
+
+            ChangeText.Text = "";
+        }
+
+        private DateTime GetDate()
+        {
+            DateTime entraceDT = DateTime.Today;
+            int hours = int.Parse(EntranceHourBox.Text);
+            int minutes = int.Parse(EntranceMinBox.Text);
+            entraceDT = entraceDT.AddHours(hours);
+            entraceDT = entraceDT.AddMinutes(minutes);
+            return entraceDT;
+        }
+
+        private string GetPlates()
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(1, 999);
+            string plates = "SM" + num + "AA";
+            PlatesText.Text = plates;
+
+            return plates;
+        }
+
+        private void SetPayment(VehicleType vehicleType, int exitId, Section section)
+        {
+            DateTime entraceDT = GetDate();
+            DateTime exitDT = DateTime.Now;
+            string plates = GetPlates();
+            int paymentId = paymentController.GenerateId();
+
+            payment = new Payment(paymentId, entraceDT, exitDT, plates, vehicleType, exitId, 1, section.Id);
+
+        }
+
+        private void CheckSpeeding(Section section)
+        {
+            speed = paymentController.CheckSpeed(payment, section.Distance);
+            if (speed < 0)
+            {
+                SpeedText.Text = "Acceptable";
+                SpeedText.Background = (Brush)brushConverter.ConvertFrom("#98fb98");
+
+            }
+            else
+            {
+                SpeedText.Text = "Speeding";
+                SpeedText.Background = (Brush)brushConverter.ConvertFrom("#ff0000");
+                int penaltyId = speedingPenaltyController.GenerateId();
+                SpeedingPenalty penalty = new SpeedingPenalty(penaltyId, payment.Id, payment.ExitDate, speed);
+                speedingPenaltyController.Add(penalty);
+            }
+
+        }
+
+        private void ChargeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            paymentController.Add(payment);
+
+            float price = float.Parse(PriceText.Text);
+            float paid = float.Parse(PaidBox.Text);
+            float change = paid - price;
+
+            ChangeText.Text = change.ToString();
+
+            ClearText();
+        }
+
+        private void ClearText()
+        {
+            EntranceHourBox.Text = "";
+            EntranceMinBox.Text = "";
+            SpeedText.Background = (Brush)brushConverter.ConvertFrom("#ffffff");
+            SpeedText.Text = "";
+            PlatesText.Text = "";
+            PriceText.Text = "";
+            PaidBox.Text = "";
+        }
+
     }
 }

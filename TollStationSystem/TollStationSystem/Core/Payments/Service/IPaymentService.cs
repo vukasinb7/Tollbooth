@@ -14,5 +14,6 @@ namespace TollStationSystem.Core.Payments.Service
         int GenerateId();
         void Load();
         void Serialize();
+        float CheckSpeed(Payment payment, float distance);
     }
 }

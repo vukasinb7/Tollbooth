@@ -12,5 +12,6 @@ namespace TollStationSystem.Core.PriceLists.Service
         int GenerateId();
         void Load();
         void Serialize();
+        Price GetPriceBySectionId(int sectionId, VehicleType vt);
     }
 }

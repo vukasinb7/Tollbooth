@@ -43,5 +43,10 @@ namespace TollStationSystem.GUI.Controllers.Sections
         {
             sectionService.Serialize();
         }
+
+        internal Section GetSectionByStations(int entranceId, int exitId)
+        {
+            return sectionService.GetSectionByStations(entranceId, exitId);
+        }
     }
 }

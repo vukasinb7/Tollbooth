@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using TollStationSystem.Core.Devices.Model;
+using TollStationSystem.Core.TollBooths.Model;
+using TollStationSystem.Core.TollBooths.Service;
 using TollStationSystem.Core.TollStations.Model;
 using TollStationSystem.Core.TollStations.Repository;
 
@@ -7,10 +10,12 @@ namespace TollStationSystem.Core.TollStations.Service
     public class TollStationService : ITollStationService
     {
         ITollStationRepo tollStationRepo;
+        ITollBoothService tollBoothService;
 
-        public TollStationService(ITollStationRepo tollStationRepo)
+        public TollStationService(ITollStationRepo tollStationRepo, ITollBoothService tollBoothService)
         {
             this.tollStationRepo = tollStationRepo;
+            this.tollBoothService = tollBoothService;
         }
 
         public List<TollStation> TollStations { get => tollStationRepo.TollStations; }
@@ -47,6 +52,51 @@ namespace TollStationSystem.Core.TollStations.Service
                     if (workerId == jmbg)
                         return station;
             return null;
+        }
+
+        public Dictionary<Device, int> FindRamps(int stationId)
+        {
+            Dictionary<Device, int> ramps = new();
+            TollStation tollStation = FindById(stationId);
+            
+            foreach (int boothNumber in tollStation.TollBooths)
+            {
+                Device ramp = tollBoothService.FindBoothRamp(stationId, boothNumber);
+                ramps.Add(ramp, boothNumber);
+            }
+
+            return ramps;
+        }
+
+        public Dictionary<Device, int> FindDevices(int stationId)
+        {
+            Dictionary<Device, int> devicesData = new();
+            TollStation tollStation = FindById(stationId); 
+
+            foreach (int boothNumber in tollStation.TollBooths)
+            {
+                List<Device> devices = tollBoothService.FindDevices(stationId, boothNumber);
+                foreach (Device device in devices)
+                    devicesData.Add(device, boothNumber);
+            }
+
+            return devicesData;
+        }
+
+        public Dictionary<Device, int> FindNonRampDevices(int stationId)
+        {
+            Dictionary<Device, int> devicesData = new();
+            TollStation tollStation = FindById(stationId);
+
+            foreach (int boothNumber in tollStation.TollBooths)
+            {
+                List<Device> devices = tollBoothService.FindDevices(stationId, boothNumber);
+                foreach (Device device in devices)
+                    if (device.DeviceType != DeviceType.RAMP)
+                        devicesData.Add(device, boothNumber);
+            }
+
+            return devicesData;
         }
     }
 }

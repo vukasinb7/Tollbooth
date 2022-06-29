@@ -49,7 +49,12 @@ namespace TollStationSystem.GUI.Controllers.TollBooths
 
         public List<Device> DevicesByBooth(int stationId, int boothNumber)
         {
-            return tollBoothService.DevicesByBooth(stationId, boothNumber);
+            return tollBoothService.FindDevices(stationId, boothNumber);
+        }
+
+        public List<Device> FindNonRampDevices(int stationId, int boothNumber)
+        {
+            return tollBoothService.FindNonRampDevices(stationId, boothNumber);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TollStationSystem.Core.Devices.Model;
 using TollStationSystem.Core.TollStations.Model;
 
 namespace TollStationSystem.Core.TollStations.Service
@@ -18,5 +19,11 @@ namespace TollStationSystem.Core.TollStations.Service
         void Serialize();
 
         TollStation FindByWorkerJmbg(string jmbg);
+
+        Dictionary<Device, int> FindRamps(int stationId);
+
+        Dictionary<Device, int> FindDevices(int stationId);
+
+        Dictionary<Device, int> FindNonRampDevices(int stationId);
     }
 }

@@ -51,15 +51,16 @@ namespace TollStationSystem.GUI.View.ClerkView
         {
             RampStatusList.Items.Clear();
             rampDisplay = new Dictionary<string, Device>();
-            foreach (int boothNum in station.TollBooths)
+            Dictionary<Device, int> ramps = tollStationController.FindRamps(station.Id);
+
+            foreach (KeyValuePair<Device, int> rampData in ramps)
             {
-                Device ramp = tollBoothController.FindBoothRamp(station.Id, boothNum);
                 string functioning = "functioning";
-                if (ramp.Malfunctioning)
+                if (rampData.Key.Malfunctioning)
                     functioning = "malfunctioning";
-                string display = "Booth: " + boothNum + ", " + ramp.Name + " - " + functioning;
+                string display = "Booth: " + rampData.Value + ", " + rampData.Key.Name + " - " + functioning;
                 RampStatusList.Items.Add(display);
-                rampDisplay.Add(display, ramp);
+                rampDisplay.Add(display, rampData.Key);
             }
         }
 
@@ -73,21 +74,16 @@ namespace TollStationSystem.GUI.View.ClerkView
         {
             DeviceStatusList.Items.Clear();
             deviceDisplay = new Dictionary<string, Device>();
-            foreach (int boothNum in station.TollBooths)
+            Dictionary<Device, int> devices = tollStationController.FindNonRampDevices(station.Id);
+
+            foreach (KeyValuePair<Device, int> deviceData in devices)
             {
-                List<Device> devices = tollBoothController.DevicesByBooth(station.Id, boothNum);
-                foreach (Device device in devices)
-                {
-                    if (device.DeviceType != DeviceType.RAMP)
-                    {
-                        string functioning = "functioning";
-                        if (device.Malfunctioning)
-                            functioning = "malfunctioning";
-                        string display = "booth: " + boothNum + ", " + device.Name + " - " + functioning;
-                        DeviceStatusList.Items.Add(display);
-                        deviceDisplay.Add(display, device);
-                    }
-                }
+                string functioning = "functioning";
+                if (deviceData.Key.Malfunctioning)
+                    functioning = "malfunctioning";
+                string display = "Booth: " + deviceData.Value + ", " + deviceData.Key.Name + " - " + functioning;
+                DeviceStatusList.Items.Add(display);
+                deviceDisplay.Add(display, deviceData.Key);
             }
         }
 
@@ -100,20 +96,20 @@ namespace TollStationSystem.GUI.View.ClerkView
         private void RampBoothComboBox_SelectionChanged(object sender,
             System.Windows.Controls.SelectionChangedEventArgs e)
         {
+            int chosenBooth = (int)RampBoothComboBox.SelectedItem;
+
             RampStatusList.Items.Clear();
             rampDisplay = new Dictionary<string, Device>();
-            int chosenBooth = (int)RampBoothComboBox.SelectedItem;
-            foreach (int boothNumber in station.TollBooths)
-                if (chosenBooth == boothNumber)
-                {
-                    Device ramp = tollBoothController.FindBoothRamp(station.Id, boothNumber);
-                    string functioning = "functioning";
-                    if (ramp.Malfunctioning)
-                        functioning = "malfunctioning";
-                    string display = "Booth: " + boothNumber + ", " + ramp.Name + " - " + functioning;
-                    RampStatusList.Items.Add(display);
-                    rampDisplay.Add(display, ramp);
-                }
+
+            Device ramp = tollBoothController.FindBoothRamp(station.Id, chosenBooth);
+            string functioning = "functioning";
+            if (ramp.Malfunctioning)
+                functioning = "malfunctioning";
+
+            string display = "Booth: " + chosenBooth + ", " + ramp.Name + " - " + functioning;
+            RampStatusList.Items.Add(display);
+            rampDisplay.Add(display, ramp);
+            
         }
 
         private void ResetRampsBtn_Click(object sender, RoutedEventArgs e)
@@ -155,23 +151,18 @@ namespace TollStationSystem.GUI.View.ClerkView
             DeviceStatusList.Items.Clear();
             deviceDisplay = new Dictionary<string, Device>();
             int chosenBooth = (int)DeviceBoothComboBox.SelectedItem;
-            foreach (int boothNumber in station.TollBooths)
-                if (chosenBooth == boothNumber)
-                {
-                    List<Device> devices = tollBoothController.DevicesByBooth(station.Id, boothNumber);
-                    foreach (Device device in devices)
-                    {
-                        if (device.DeviceType != DeviceType.RAMP)
-                        {
-                            string functioning = "functioning";
-                            if (device.Malfunctioning)
-                                functioning = "malfunctioning";
-                            string display = "booth: " + boothNumber + ", " + device.Name + " - " + functioning;
-                            DeviceStatusList.Items.Add(display);
-                            deviceDisplay.Add(display, device);
-                        }
-                    }
-                }
+            List<Device> devices = tollBoothController.FindNonRampDevices(station.Id, chosenBooth);
+
+            foreach (Device device in devices)
+            {
+                string functioning = "functioning";
+                if (device.Malfunctioning)
+                    functioning = "malfunctioning";
+
+                string display = "Booth: " + chosenBooth + ", " + device.Name + " - " + functioning;
+                DeviceStatusList.Items.Add(display);
+                deviceDisplay.Add(display, device);
+            }
         }
 
         private void ResetDevicesBtn_Click(object sender, RoutedEventArgs e)

@@ -21,6 +21,8 @@ namespace TollStationSystem.Core.TollBooths.Service
 
         Device FindBoothRamp(int stationId, int boothNumber);
 
-        List<Device> DevicesByBooth(int stationId, int boothNumber);
+        List<Device> FindDevices(int stationId, int boothNumber);
+
+        List<Device> FindNonRampDevices(int stationId, int boothNumber);
     }
 }

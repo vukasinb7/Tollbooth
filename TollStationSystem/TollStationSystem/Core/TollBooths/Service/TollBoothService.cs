@@ -58,13 +58,28 @@ namespace TollStationSystem.Core.TollBooths.Service
             return null;
         }
 
-        public List<Device> DevicesByBooth(int stationId, int boothNumber)
+        public List<Device> FindDevices(int stationId, int boothNumber)
         {
             List<Device> filtered = new();
 
             TollBooth tollBooth = FindById(stationId, boothNumber);
             foreach (int deviceId in tollBooth.Devices)
                 filtered.Add(deviceService.FindById(deviceId));
+
+            return filtered;
+        }
+
+        public List<Device> FindNonRampDevices(int stationId, int boothNumber)
+        {
+            List<Device> filtered = new();
+
+            TollBooth tollBooth = FindById(stationId, boothNumber);
+            foreach (int deviceId in tollBooth.Devices)
+            {
+                Device device = deviceService.FindById(deviceId);
+                if (device.DeviceType != DeviceType.RAMP)
+                    filtered.Add(device);
+            }
 
             return filtered;
         }

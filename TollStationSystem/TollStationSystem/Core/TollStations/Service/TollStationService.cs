@@ -62,6 +62,10 @@ namespace TollStationSystem.Core.TollStations.Service
             tollStationRepo.Serialize();
         }
 
+        public TollStation FindByBoss(string jmbg)
+        {
+            return TollStations.Single(x => x.BossJmbg == jmbg);
+        }
         public void RemoveTollBooth(TollBooth tollBooth, TollStation tollStation)
         {
             tollStation.TollBooths.Remove(tollBooth.Number);

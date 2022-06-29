@@ -43,18 +43,16 @@ namespace TollStationSystem.Core.PriceLists.Service
         {
             priceListRepo.Add(priceList);
         }
-
-        public List<PriceList> SortedByStartDate()
+        
+        public Price GetPriceBySectionId(int sectionId, VehicleType vt, DateTime date)
         {
-            return priceListRepo.PriceLists.OrderByDescending(x => x.StartDate).ToList();
-        }
 
-        public PriceList GetActive(DateTime date)
-        {
-            foreach (PriceList priceList in SortedByStartDate())
+            foreach (Price price in GetActive(date).Prices)
             {
-                if (priceList.StartDate <= date) return priceList;
+                if (price.SectionId == sectionId && price.VehicleType1 == vt)
+                    return price;
             }
+
             return null;
         }
 
@@ -69,10 +67,10 @@ namespace TollStationSystem.Core.PriceLists.Service
             return prices;
         }
         
-        public Price GetPriceBySectionId(int sectionId, VehicleType vt)
+         public Price GetPriceBySectionId(int sectionId, VehicleType vt)
         {
 
-            foreach (Price price in PriceLists[0].Prices)
+            foreach (Price price in GetActive(DateTime.Now).Prices)
             {
                 if (price.SectionId == sectionId && price.VehicleType1 == vt)
                     return price;
@@ -81,5 +79,17 @@ namespace TollStationSystem.Core.PriceLists.Service
             return null;
         }
 
+        public PriceList GetActive(DateTime date)
+        {
+            foreach (PriceList priceList in SortedByStartDate())
+            {
+                if (priceList.StartDate <= date) return priceList;
+            }
+            return null;
+        }
+        public List<PriceList> SortedByStartDate()
+        {
+            return priceListRepo.PriceLists.OrderByDescending(x => x.StartDate).ToList();
+        }
     }
 }

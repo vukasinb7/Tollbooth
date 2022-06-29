@@ -59,6 +59,21 @@ namespace TollStationSystem.Core.TollBooths.Service
             tollBoothRepo.Serialize();
         }
 
+        public List<TollBooth> GetAllFromStation(TollStation tollStation)
+        {
+            List<TollBooth> tollBooths = new();
+            foreach (int tollBoothNumber in tollStation.TollBooths)
+            {
+                tollBooths.Add(FindById(tollStation.Id, tollBoothNumber));
+            }
+            return tollBooths;
+        }
+
+        public void Fix(TollBooth tollBooth)
+        {
+            tollBooth.Malfunctioning = false;
+            Serialize();
+        }
 
         public bool AlreadyExist(int stationId, int number)
         {

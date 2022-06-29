@@ -58,6 +58,11 @@ namespace TollStationSystem.Core.Devices.Service
             return devices;
         }
 
+        public void Fix(Device device)
+        {
+            device.Malfunctioning = false;
+            Serialize();
+        }
         public void ReportMalfunction(int deviceId)
         {
             Device device = FindById(deviceId);

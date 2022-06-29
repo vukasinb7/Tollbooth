@@ -23,6 +23,8 @@ namespace TollStationSystem.Core.TollStations.Service
 
         void Serialize();
 
+        TollStation FindByBoss(string jmbg);
+        
         void RemoveTollBooth(TollBooth tollBooth, TollStation tollStation);
 
         void Delete(TollStation tollStation);

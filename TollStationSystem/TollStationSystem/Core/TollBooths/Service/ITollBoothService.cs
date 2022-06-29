@@ -20,7 +20,12 @@ namespace TollStationSystem.Core.TollBooths.Service
 
         void Serialize();
 
+        List<TollBooth> GetAllFromStation(TollStation tollStation);
+
+        void Fix(TollBooth tollBooth);
+        
         public bool AlreadyExist(int stationId, int number);
+        
         public void Delete(int stationId, int number);
 
         void Update(TollBoothDto tollBoothDto);

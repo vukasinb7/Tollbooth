@@ -48,6 +48,10 @@ namespace TollStationSystem.GUI.Controllers.TollStations
             tollStationService.Serialize();
         }
 
+        public TollStation FindByBoss(string jmbg)
+        {
+            return tollStationService.FindByBoss(jmbg);
+        }
 
         public void Delete(TollStation tollStation)
         {

@@ -48,6 +48,11 @@ namespace TollStationSystem.GUI.Controllers.Devices
             return deviceService.GenerateDevices();
         }
 
+        public void Fix(Device device)
+        {
+            deviceService.Fix(device);
+        }
+        
         public void ReportMalfunction(int deviceId)
         {
             deviceService.ReportMalfunction(deviceId);

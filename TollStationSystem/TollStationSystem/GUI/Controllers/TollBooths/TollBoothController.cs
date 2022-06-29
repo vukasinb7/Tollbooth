@@ -48,6 +48,15 @@ namespace TollStationSystem.GUI.Controllers.TollBooths
             tollBoothService.Serialize();
         }
 
+        public List<TollBooth> GetAllFromStation(TollStation tollStation)
+        {
+            return tollBoothService.GetAllFromStation(tollStation);
+        }
+
+        public void Fix(TollBooth tollBooth)
+        {
+            tollBoothService.Fix(tollBooth);
+        }
         public bool AlreadyExist(int stationId, int number)
         {
             return tollBoothService.AlreadyExist(stationId, number);
@@ -72,6 +81,5 @@ namespace TollStationSystem.GUI.Controllers.TollBooths
         {
             return tollBoothService.FindNonRampDevices(stationId, boothNumber);
         }
-
     }
 }

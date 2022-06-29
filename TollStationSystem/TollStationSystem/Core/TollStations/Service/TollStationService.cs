@@ -39,5 +39,14 @@ namespace TollStationSystem.Core.TollStations.Service
         {
             tollStationRepo.Serialize();
         }
+
+        public TollStation FindByWorkerJmbg(string jmbg)
+        {
+            foreach (TollStation station in TollStations)
+                foreach (string workerId in station.Users)
+                    if (workerId == jmbg)
+                        return station;
+            return null;
+        }
     }
 }

@@ -39,5 +39,10 @@ namespace TollStationSystem.GUI.Controllers.TollStations
         {
             tollStationService.Serialize();
         }
+
+        public TollStation FindByWorkerJmbg(string jmg)
+        {
+            return tollStationService.FindByWorkerJmbg(jmg);
+        }
     }
 }

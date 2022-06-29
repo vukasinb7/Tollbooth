@@ -1,7 +1,10 @@
 ﻿using System.Windows;
+using TollStationSystem.Core.TollStations.Model;
 using TollStationSystem.Core.Users.Model;
 using TollStationSystem.Database;
 using TollStationSystem.GUI.Controller.Users;
+using TollStationSystem.GUI.Controllers.TollStations;
+using TollStationSystem.GUI.View.ClerkView;
 
 namespace TollStationSystem
 {
@@ -9,6 +12,7 @@ namespace TollStationSystem
     {
         ServiceBuilder serviceBuilder;
         UserController userController;
+        TollStationController tollStationController;
 
         public MainWindow()
         {
@@ -38,7 +42,10 @@ namespace TollStationSystem
             }
             else if (user.UserType == UserType.CLERK)
             {
-                MessageBox.Show("Logged in as clerk");
+                TollStation tollStation = tollStationController.FindByWorkerJmbg(user.Jmbg);
+                ClerkWindow clerkWindow = new ClerkWindow(tollStation, serviceBuilder);
+                clerkWindow.Show();
+                Close();
             }
             else if (user.UserType == UserType.MANAGER)
             {

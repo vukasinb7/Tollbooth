@@ -170,7 +170,7 @@ namespace TollStationSystem.GUI.View.ClerkView
                     return;
                 }
                 RampMalfunctionBtn.IsEnabled = true;
-                RampLabel.Foreground = (Brush)brushConverter.ConvertFrom("#98fb98");
+                RampLabel.Foreground = (Brush)brushConverter.ConvertFrom("#00D100");
             }
         }
 

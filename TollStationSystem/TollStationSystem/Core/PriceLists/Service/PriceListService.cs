@@ -46,9 +46,9 @@ namespace TollStationSystem.Core.PriceLists.Service
         
         public Price GetPriceBySectionId(int sectionId, VehicleType vt, DateTime date)
         {
-
             foreach (Price price in GetActive(date).Prices)
             {
+
                 if (price.SectionId == sectionId && price.VehicleType1 == vt)
                     return price;
             }

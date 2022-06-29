@@ -58,5 +58,25 @@
     "stationId": 1001,
     "boothNumber": 1,
     "sectionId": 1001
+  },
+  {
+    "id": 1007,
+    "entranceDate": "2022-06-30T00:10:00+02:00",
+    "exitDate": "2022-06-30T01:02:12.3480424+02:00",
+    "registrationNumber": "SM702AA",
+    "vehicleType": 2,
+    "stationId": 1001,
+    "boothNumber": 1,
+    "sectionId": 1002
+  },
+  {
+    "id": 1008,
+    "entranceDate": "2022-06-30T00:30:00+02:00",
+    "exitDate": "2022-06-30T01:03:38.5913199+02:00",
+    "registrationNumber": "SM40AA",
+    "vehicleType": 2,
+    "stationId": 1001,
+    "boothNumber": 1,
+    "sectionId": 1001
   }
 ]

@@ -27,5 +27,18 @@
     "tollBooths": [
       2
     ]
+  },
+  {
+    "id": 1003,
+    "name": "Station C",
+    "bossJmbg": "1007",
+    "locationZip": "1003",
+    "users": [
+      "1009",
+      "1010"
+    ],
+    "tollBooths": [
+      1
+    ]
   }
 ]

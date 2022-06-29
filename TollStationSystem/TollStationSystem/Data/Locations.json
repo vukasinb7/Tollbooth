@@ -10,5 +10,11 @@
     "name": "Subotica",
     "country": "Srbija",
     "municipality": "Subotica"
+  },
+  {
+    "zip": "1003",
+    "name": "Beograd",
+    "country": "Srbija",
+    "municipality": "Beograd"
   }
 ]

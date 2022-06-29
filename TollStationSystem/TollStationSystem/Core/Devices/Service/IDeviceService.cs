@@ -13,5 +13,6 @@ namespace TollStationSystem.Core.Devices.Service
         int GenerateId();
         void Load();
         void Serialize();
+        void Fix(Device device);
     }
 }

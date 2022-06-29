@@ -17,5 +17,9 @@ namespace TollStationSystem.Core.TollBooths.Service
         void Load();
 
         void Serialize();
+
+        List<TollBooth> GetAllFromStation(TollStation tollStation);
+
+        void Fix(TollBooth tollBooth);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TollStationSystem.Core.TollStations.Model;
 using TollStationSystem.Core.TollStations.Repository;
 
@@ -38,6 +39,11 @@ namespace TollStationSystem.Core.TollStations.Service
         public void Serialize()
         {
             tollStationRepo.Serialize();
+        }
+
+        public TollStation FindByBoss(string jmbg)
+        {
+            return TollStations.Single(x => x.BossJmbg == jmbg);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace TollStationSystem.Database
             tollBoothService = new TollBoothService(tollBoothDatabase.TollBoothRepo);
             bossService = new BossService(tollBoothDatabase.BossRepo);
             tollStationService = new TollStationService(tollBoothDatabase.TollStationRepo);
-            paymentService = new PaymentService(tollBoothDatabase.PaymentRepo);
+            paymentService = new PaymentService(tollBoothDatabase.PaymentRepo,priceListService,tollStationService);
             tagUserService = new TagUserService(tollBoothDatabase.TagUserRepo);
             userService = new UserService(tollBoothDatabase.UserRepo, bossService);
         }

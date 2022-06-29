@@ -16,5 +16,7 @@ namespace TollStationSystem.Core.TollStations.Service
         void Load();
 
         void Serialize();
+
+        TollStation FindByBoss(string jmbg);
     }
 }

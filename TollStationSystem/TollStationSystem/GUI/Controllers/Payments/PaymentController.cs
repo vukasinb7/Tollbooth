@@ -43,5 +43,14 @@ namespace TollStationSystem.GUI.Controllers.Payments
         {
             paymentService.Serialize();
         }
+        public Tuple<float, float> FindSumOfPayments(int tollStationId, DateTime start, DateTime end)
+        {
+            return paymentService.FindSumOfPayments(tollStationId, start, end);
+        }
+
+        public Tuple<float, float> FindSumOfPayments(DateTime start, DateTime end)
+        {
+            return paymentService.FindSumOfPayments(start, end);
+        }
     }
 }

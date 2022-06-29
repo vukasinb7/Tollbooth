@@ -18,18 +18,18 @@ using TollStationSystem.GUI.Controllers.Locations;
 using TollStationSystem.GUI.Controllers.Payments;
 using TollStationSystem.GUI.Controllers.TollStations;
 
-namespace TollStationSystem.GUI.View
+namespace TollStationSystem.GUI.View.ManagerView
 {
     /// <summary>
     /// Interaction logic for ManagerView.xaml
     /// </summary>
-    public partial class ManagerView : Window
+    public partial class ManagerWindow : Window
     {
         ServiceBuilder serviceBuilder;
         PaymentController paymentController;
         TollStationController tollStationController;
         LocationController locationController;
-        public ManagerView(ServiceBuilder serviceBuilder)
+        public ManagerWindow(ServiceBuilder serviceBuilder)
         {
             this.serviceBuilder = serviceBuilder;
             InitializeComponent();
@@ -37,6 +37,9 @@ namespace TollStationSystem.GUI.View
 
             fromIncomeDp.SelectedDate = DateTime.Now.Date;
             toIncomeDp.SelectedDate = DateTime.Now.Date;
+
+            dinIncomeTb.IsReadOnly = true;
+            eurIncomeTb.IsReadOnly = true;
 
         }
 

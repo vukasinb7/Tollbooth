@@ -35,9 +35,12 @@ namespace TollStationSystem.GUI.View.AdministratorView
 
         private Dictionary<int, TollStation> indexedTollStations;
         private Dictionary<int, TollBooth> indexedTollBooths;
+
         public AdministratorWindow(ServiceBuilder serviceBuilder)
         {
             this.serviceBuilder = serviceBuilder;
+            indexedTollStations = new();
+            indexedTollBooths = new();
             InitializeComponent();
             InitializeControllers();
             InitializeCb();
@@ -45,6 +48,7 @@ namespace TollStationSystem.GUI.View.AdministratorView
             InitilaizeTollBoothType();
             InitializeTollBoothLb();
             InitializeTollStationsCb();
+
 
             UpdateTollBoothBtn.IsEnabled = false;
             deleteTollBoothBtn.IsEnabled = false;
@@ -314,5 +318,15 @@ namespace TollStationSystem.GUI.View.AdministratorView
         }
 
         #endregion
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Log out?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                MainWindow main = new MainWindow();
+                main.Show();
+            }
+            else e.Cancel = true;
+        }
     }
 }

@@ -47,11 +47,12 @@ namespace TollStationSystem.Core.Devices.Service
         {
             List<Device> devices = new();
             Device ramp = new Device(GenerateId(), "Ramp", false, DeviceType.RAMP);
-            Device semaphore = new Device(GenerateId(), "Semaphore", false, DeviceType.SEMAPHORE);
-            Device tagReader = new Device(GenerateId(), "Tag Reader", false, DeviceType.TAG_READER);
             deviceRepo.Add(ramp);
+            Device semaphore = new Device(GenerateId(), "Semaphore", false, DeviceType.SEMAPHORE);
             deviceRepo.Add(semaphore);
+            Device tagReader = new Device(GenerateId(), "Tag Reader", false, DeviceType.TAG_READER);
             deviceRepo.Add(tagReader);
+
             devices.Add(ramp);
             devices.Add(semaphore);
             devices.Add(tagReader);

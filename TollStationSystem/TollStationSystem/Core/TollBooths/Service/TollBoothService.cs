@@ -15,7 +15,8 @@ namespace TollStationSystem.Core.TollBooths.Service
         ITollStationService tollStationService;
         IDeviceService deviceService;
 
-        public TollBoothService(ITollBoothRepo tollBoothRepo, ITollStationService tollStationService, IDeviceService deviceService)
+        public TollBoothService(ITollBoothRepo tollBoothRepo, ITollStationService tollStationService, 
+            IDeviceService deviceService)
         {
             this.tollBoothRepo = tollBoothRepo;
             this.tollStationService = tollStationService;
@@ -24,10 +25,13 @@ namespace TollStationSystem.Core.TollBooths.Service
 
         public List<TollBooth> TollBooths { get => tollBoothRepo.TollBooths; }
 
+        public ITollStationService TollStationService { get => tollStationService; set => tollStationService = value; }
+
         public void Add(TollBoothDto tollBoothDto)
         {
             TollBooth tollBooth = new TollBooth(tollBoothDto);
             tollBoothRepo.Add(tollBooth);
+            tollStationService.AddTollBooth(tollBooth);
         }
 
         public void Update(TollBoothDto tollBoothDto)

@@ -43,6 +43,8 @@ namespace TollStationSystem.GUI.View.BossView
             tollStation = tollStationController.FindByBoss(boss.Jmbg);
             stationLbl.Content = tollStation.Name;
             InitializeTollBoothCb();
+            dinIncomeTb.IsReadOnly = true;
+            eurIncomeTb.IsReadOnly = true;
         }
 
         void InitializeControllers()

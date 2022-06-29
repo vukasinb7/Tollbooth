@@ -41,5 +41,6 @@ namespace TollStationSystem.Core.TollStations.Service
 
         Dictionary<Device, int> FindNonRampDevices(int stationId);
 
+        void AddTollBooth(TollBooth tollBooth);
     }
 }

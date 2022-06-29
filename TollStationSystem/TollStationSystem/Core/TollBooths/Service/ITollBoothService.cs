@@ -2,6 +2,7 @@
 using TollStationSystem.Core.Devices.Model;
 using TollStationSystem.Core.TollBooths.Model;
 using TollStationSystem.Core.TollStations.Model;
+using TollStationSystem.Core.TollStations.Service;
 using TollStationSystem.GUI.DTO;
 
 namespace TollStationSystem.Core.TollBooths.Service
@@ -9,6 +10,8 @@ namespace TollStationSystem.Core.TollBooths.Service
     public interface ITollBoothService
     {
         List<TollBooth> TollBooths { get; }
+
+        ITollStationService TollStationService { get; set; }
 
         void Add(GUI.DTO.TollBoothDto tollBooth);
 

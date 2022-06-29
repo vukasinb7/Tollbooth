@@ -20,7 +20,7 @@
   {
     "id": 1004,
     "name": "RampB",
-    "malfunctioning": true,
+    "malfunctioning": false,
     "deviceType": 0
   },
   {
@@ -68,6 +68,60 @@
   {
     "id": 1012,
     "name": "TagReaderD",
+    "malfunctioning": false,
+    "deviceType": 2
+  },
+  {
+    "id": 1013,
+    "name": "Ramp",
+    "malfunctioning": false,
+    "deviceType": 0
+  },
+  {
+    "id": 1013,
+    "name": "Semaphore",
+    "malfunctioning": false,
+    "deviceType": 1
+  },
+  {
+    "id": 1013,
+    "name": "Tag Reader",
+    "malfunctioning": false,
+    "deviceType": 2
+  },
+  {
+    "id": 1014,
+    "name": "Ramp",
+    "malfunctioning": false,
+    "deviceType": 0
+  },
+  {
+    "id": 1015,
+    "name": "Semaphore",
+    "malfunctioning": false,
+    "deviceType": 1
+  },
+  {
+    "id": 1016,
+    "name": "Tag Reader",
+    "malfunctioning": false,
+    "deviceType": 2
+  },
+  {
+    "id": 1017,
+    "name": "Ramp",
+    "malfunctioning": false,
+    "deviceType": 0
+  },
+  {
+    "id": 1018,
+    "name": "Semaphore",
+    "malfunctioning": false,
+    "deviceType": 1
+  },
+  {
+    "id": 1019,
+    "name": "Tag Reader",
     "malfunctioning": false,
     "deviceType": 2
   }

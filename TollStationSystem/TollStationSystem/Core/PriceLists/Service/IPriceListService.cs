@@ -26,12 +26,7 @@ namespace TollStationSystem.Core.PriceLists.Service
         
         List<PriceList> SortedByStartDate();
 
-        List<PriceList> SortedByStartDate();
-
-        PriceList GetActive(DateTime date);
-
         List<Price> GetPricesBySection(int sectionId);
 
-        Price GetPriceBySectionId(int sectionId, VehicleType vt);
     }
 }

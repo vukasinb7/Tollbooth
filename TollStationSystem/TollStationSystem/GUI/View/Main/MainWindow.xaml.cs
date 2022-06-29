@@ -4,7 +4,10 @@ using TollStationSystem.Core.Users.Model;
 using TollStationSystem.Database;
 using TollStationSystem.GUI.Controller.Users;
 using TollStationSystem.GUI.Controllers.TollStations;
+using TollStationSystem.GUI.View.AdministratorView;
+using TollStationSystem.GUI.View.BossView;
 using TollStationSystem.GUI.View.ClerkView;
+using TollStationSystem.GUI.View.ManagerView;
 
 namespace TollStationSystem
 {
@@ -35,11 +38,15 @@ namespace TollStationSystem
             }
             else if (user.UserType == UserType.ADMINISTRATOR)
             {
-                MessageBox.Show("Logged in as admin");
+                AdministratorWindow administratorWindow = new(serviceBuilder);
+                administratorWindow.Show();
+                Close();
             }
             else if (user.UserType == UserType.BOSS)
             {
-                MessageBox.Show("Logged in as boss");
+                BossWindow bossWindow = new(serviceBuilder, (Boss)user);
+                bossWindow.Show();
+                Close();
             }
             else if (user.UserType == UserType.CLERK)
             {
@@ -50,7 +57,9 @@ namespace TollStationSystem
             }
             else if (user.UserType == UserType.MANAGER)
             {
-                MessageBox.Show("Logged in as manager");
+                ManagerWindow managerWindow = new(serviceBuilder);
+                managerWindow.Show();
+                Close();
             }
         }
     }

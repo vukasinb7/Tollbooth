@@ -61,10 +61,10 @@ namespace TollStationSystem.Core.TollBooths.Repository
             foreach (TollBooth tollBooth in tollBooths)
             {
                 if (tollBooth.TollStationId == stationId && tollBooth.Number == number)
-                    return false;
+                    return true;
             }
 
-            return true;
+            return false;
         }
     }
 }

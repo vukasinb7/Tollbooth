@@ -40,12 +40,15 @@ namespace TollStationSystem.Database
             priceListService = new PriceListService(tollBoothDatabase.PriceListRepo);
             sectionService = new SectionService(tollBoothDatabase.SectionRepo);
             speedingPenaltyService = new SpeedingPenaltyService(tollBoothDatabase.SpeedingPenaltyRepo);
-            tollBoothService = new TollBoothService(tollBoothDatabase.TollBoothRepo, deviceService);
+            tollBoothService = new TollBoothService(tollBoothDatabase.TollBoothRepo, null, deviceService);
             bossService = new BossService(tollBoothDatabase.BossRepo);
-            paymentService = new PaymentService(tollBoothDatabase.PaymentRepo,priceListService,tollStationService);
-            tollStationService = new TollStationService(tollBoothDatabase.TollStationRepo, tollBoothService);
+            tollStationService = new TollStationService(tollBoothDatabase.TollStationRepo, bossService, 
+                tollBoothService, sectionService);
+            paymentService = new PaymentService(tollBoothDatabase.PaymentRepo, priceListService, tollStationService);
             tagUserService = new TagUserService(tollBoothDatabase.TagUserRepo);
             userService = new UserService(tollBoothDatabase.UserRepo, bossService);
+
+            tollBoothService.TollStationService = tollStationService;
         }
 
         public IDeploymentHistoryService DeploymentHisyoryService { get => deploymentHisyoryService; }

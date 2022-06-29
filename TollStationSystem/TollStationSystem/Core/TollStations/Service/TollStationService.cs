@@ -173,5 +173,12 @@ namespace TollStationSystem.Core.TollStations.Service
 
             return devicesData;
         }
+
+        public void AddTollBooth(TollBooth tollBooth)
+        {
+            TollStation tollStation = FindById(tollBooth.TollStationId);
+            tollStation.TollBooths.Add(tollBooth.Number);
+            Serialize();
+        }
     }
 }

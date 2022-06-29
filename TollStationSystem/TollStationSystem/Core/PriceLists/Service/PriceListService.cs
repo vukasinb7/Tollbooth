@@ -43,6 +43,7 @@ namespace TollStationSystem.Core.PriceLists.Service
         {
             priceListRepo.Add(priceList);
         }
+        
         public Price GetPriceBySectionId(int sectionId, VehicleType vt, DateTime date)
         {
 
@@ -55,7 +56,18 @@ namespace TollStationSystem.Core.PriceLists.Service
             return null;
         }
 
-        public Price GetPriceBySectionId(int sectionId, VehicleType vt)
+        public List<Price> GetPricesBySection(int sectionId)
+        {
+            PriceList activePriceList = GetActive(DateTime.Today);
+            List<Price> prices = new();
+            foreach (Price price in activePriceList.Prices)
+            {
+                if (price.SectionId == sectionId) prices.Add(price);
+            }
+            return prices;
+        }
+        
+         public Price GetPriceBySectionId(int sectionId, VehicleType vt)
         {
 
             foreach (Price price in GetActive(DateTime.Now).Prices)

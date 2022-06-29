@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TollStationSystem.Core.DeploymentHistory.Model;
 using TollStationSystem.Core.Users.Model;
 
 namespace TollStationSystem.Core.Users.Service
@@ -14,5 +15,9 @@ namespace TollStationSystem.Core.Users.Service
         void Load();
 
         void Serialize();
+
+        void RemoveFromStation(string bossJmbg);
+
+        DeploymentHistoryRecord PutToStation(int stationId, Boss boss);
     }
 }

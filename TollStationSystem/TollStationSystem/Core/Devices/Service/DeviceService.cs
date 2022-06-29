@@ -63,5 +63,11 @@ namespace TollStationSystem.Core.Devices.Service
             device.Malfunctioning = false;
             Serialize();
         }
+        public void ReportMalfunction(int deviceId)
+        {
+            Device device = FindById(deviceId);
+            device.Malfunctioning = true;
+            Serialize();
+        }
     }
 }

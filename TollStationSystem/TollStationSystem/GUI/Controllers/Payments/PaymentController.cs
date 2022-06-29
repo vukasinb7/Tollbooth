@@ -52,5 +52,10 @@ namespace TollStationSystem.GUI.Controllers.Payments
         {
             return paymentService.FindSumOfPayments(start, end);
         }
+
+        internal float CheckSpeed(Payment payment, float distance)
+        {
+            return paymentService.CheckSpeed(payment, distance);
+        }
     }
 }

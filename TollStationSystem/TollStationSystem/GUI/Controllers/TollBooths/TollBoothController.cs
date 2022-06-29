@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using TollStationSystem.Core.Devices.Model;
 using TollStationSystem.Core.TollBooths.Model;
 using TollStationSystem.Core.TollBooths.Service;
 using TollStationSystem.Core.TollStations.Model;
+using TollStationSystem.GUI.DTO;
 
 namespace TollStationSystem.GUI.Controllers.TollBooths
 {
@@ -16,9 +18,14 @@ namespace TollStationSystem.GUI.Controllers.TollBooths
 
         public List<TollBooth> TollBooths { get => tollBoothService.TollBooths; }
 
-        public void Add(TollBooth tollBooth)
+        public void Add(TollBoothDto tollBoothDto)
         {
-            tollBoothService.Add(tollBooth);
+            tollBoothService.Add(tollBoothDto);
+        }
+
+        public void Delete(int stationId, int number)
+        {
+            tollBoothService.Delete(stationId, number);
         }
 
         public TollBooth FindById(int stationId, int boothNumber)
@@ -49,6 +56,30 @@ namespace TollStationSystem.GUI.Controllers.TollBooths
         public void Fix(TollBooth tollBooth)
         {
             tollBoothService.Fix(tollBooth);
+        }
+        public bool AlreadyExist(int stationId, int number)
+        {
+            return tollBoothService.AlreadyExist(stationId, number);
+        }
+
+        public void Update(TollBoothDto tollBoothDto)
+        {
+            tollBoothService.Update(tollBoothDto);
+        }
+        
+        public Device FindBoothRamp(int stationId, int boothNumber)
+        {
+            return tollBoothService.FindBoothRamp(stationId, boothNumber);
+        }
+
+        public List<Device> DevicesByBooth(int stationId, int boothNumber)
+        {
+            return tollBoothService.FindDevices(stationId, boothNumber);
+        }
+
+        public List<Device> FindNonRampDevices(int stationId, int boothNumber)
+        {
+            return tollBoothService.FindNonRampDevices(stationId, boothNumber);
         }
     }
 }

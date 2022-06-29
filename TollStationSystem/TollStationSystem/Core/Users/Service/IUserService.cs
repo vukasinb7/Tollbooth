@@ -14,5 +14,7 @@ namespace TollStationSystem.Core.Users.Service
         void Load();
 
         void Serialize();
+
+        User Login(string username, string password);
     }
 }

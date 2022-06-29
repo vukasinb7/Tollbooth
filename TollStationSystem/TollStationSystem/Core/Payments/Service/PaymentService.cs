@@ -84,5 +84,16 @@ namespace TollStationSystem.Core.Payments.Service
 
             return Tuple.Create(sumDin, sumEur);
         }
+        public float CheckSpeed(Payment payment, float distance)
+        {
+            TimeSpan ts = payment.ExitDate - payment.EntranceDate;
+            float myTime = ts.Hours * 60 + ts.Minutes;
+
+            float speedLimit = 120 / 60;  //km per minut
+            float minTime = distance / speedLimit;
+
+
+            return minTime - myTime;
+        }
     }
 }

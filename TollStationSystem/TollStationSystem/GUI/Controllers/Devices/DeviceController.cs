@@ -52,5 +52,10 @@ namespace TollStationSystem.GUI.Controllers.Devices
         {
             deviceService.Fix(device);
         }
+        
+        public void ReportMalfunction(int deviceId)
+        {
+            deviceService.ReportMalfunction(deviceId);
+        }
     }
 }

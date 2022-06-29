@@ -2,6 +2,7 @@
 using TollStationSystem.Core.TollBooths.Model;
 using TollStationSystem.Core.TollBooths.Service;
 using TollStationSystem.Core.TollStations.Model;
+using TollStationSystem.GUI.DTO;
 
 namespace TollStationSystem.GUI.Controllers.TollBooths
 {
@@ -16,9 +17,14 @@ namespace TollStationSystem.GUI.Controllers.TollBooths
 
         public List<TollBooth> TollBooths { get => tollBoothService.TollBooths; }
 
-        public void Add(TollBooth tollBooth)
+        public void Add(TollBoothDto tollBoothDto)
         {
-            tollBoothService.Add(tollBooth);
+            tollBoothService.Add(tollBoothDto);
+        }
+
+        public void Delete(int stationId, int number)
+        {
+            tollBoothService.Delete(stationId, number);
         }
 
         public TollBooth FindById(int stationId, int boothNumber)
@@ -40,5 +46,17 @@ namespace TollStationSystem.GUI.Controllers.TollBooths
         {
             tollBoothService.Serialize();
         }
+
+
+        public bool AlreadyExist(int stationId, int number)
+        {
+            return tollBoothService.AlreadyExist(stationId, number);
+        }
+
+        public void Update(TollBoothDto tollBoothDto)
+        {
+            tollBoothService.Update(tollBoothDto);
+        }
+
     }
 }

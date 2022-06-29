@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using TollStationSystem.GUI.DTO;
 
 namespace TollStationSystem.Core.TollBooths.Model
 {
@@ -24,6 +25,15 @@ namespace TollStationSystem.Core.TollBooths.Model
             this.tollBoothType = tollBoothType;
             this.malfunctioning = malfunctioning;
             this.devices = devices;
+        }
+
+        public TollBooth(TollBoothDto tollBoothDto)
+        {
+            this.tollStationId = tollBoothDto.TollStationId;
+            this.number = tollBoothDto.Number;
+            this.tollBoothType = tollBoothDto.TollBoothType;
+            this.malfunctioning = tollBoothDto.Malfunctioning;
+            this.devices = tollBoothDto.Devices;
         }
 
         [JsonPropertyName("tollStationId")]

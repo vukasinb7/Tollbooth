@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TollStationSystem.Core.TollBooths.Model;
 using TollStationSystem.Core.TollStations.Model;
 
 namespace TollStationSystem.Core.TollStations.Service
@@ -16,5 +17,6 @@ namespace TollStationSystem.Core.TollStations.Service
         void Load();
 
         void Serialize();
+        void RemoveTollBooth(TollBooth tollBooth, TollStation tollStation);
     }
 }

@@ -37,6 +37,19 @@ namespace TollStationSystem.Core.Users.Service
             userRepo.Serialize();
         }
 
+        public User Login(string username, string password)
+        {
+            foreach (User user in Users)
+                if (user.Account.Username == username && user.Account.Password == password)
+                    return user;
+
+            foreach (Boss boss in bossService.Bosses)
+                if (boss.Account.Username == username && boss.Account.Password == password)
+                    return boss;
+
+            return null;
+        }
+
     }
 
 }

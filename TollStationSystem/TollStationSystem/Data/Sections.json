@@ -6,19 +6,19 @@
     "distance": 100
   },
   {
-    "id": 1001,
+    "id": 1002,
     "entranceStation": 1002,
     "exitStation": 1001,
     "distance": 100
   },
   {
-    "id": 1002,
+    "id": 1003,
     "entranceStation": 1001,
     "exitStation": 1003,
     "distance": 70
   },
   {
-    "id": 1002,
+    "id": 1004,
     "entranceStation": 1003,
     "exitStation": 1001,
     "distance": 70
